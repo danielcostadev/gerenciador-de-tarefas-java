@@ -45,5 +45,12 @@ public class TarefaController {
 
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removerTarefa(@PathVariable Long id){
+        this.tarefaRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
