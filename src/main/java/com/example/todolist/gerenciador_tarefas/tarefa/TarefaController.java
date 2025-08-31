@@ -1,9 +1,9 @@
 package com.example.todolist.gerenciador_tarefas.tarefa;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,6 +17,14 @@ public class TarefaController {
     @GetMapping
     public List<Tarefa> listarTodas(){
         return this.tarefaRepository.findAll();
+    }
+
+    @PostMapping
+    public ResponseEntity<Tarefa> cadastrarTarefa(@RequestBody Tarefa tarefa){
+
+        Tarefa tarefaSalva = this.tarefaRepository.save(tarefa);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(tarefaSalva);
     }
 
 }
