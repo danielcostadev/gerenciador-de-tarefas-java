@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GerenciadorTarefasApplication implements CommandLineRunner {
+public class GerenciadorTarefasApplication {
 
 	@Autowired
 	private TarefaRepository tarefaRepository;
@@ -17,22 +17,4 @@ public class GerenciadorTarefasApplication implements CommandLineRunner {
 		SpringApplication.run(GerenciadorTarefasApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println("### APLICAÇÃO INICIADA ###");
-		System.out.println("--- Cadastrando uma tarefa de teste... ---");
-
-		Tarefa tarefaTeste = new Tarefa(
-				null,
-				"TarefaTeste01",
-				"Testando Cadastro de Tarefas",
-				"Testes",
-				"baixa",
-				"doing"
-		);
-
-		this.tarefaRepository.save(tarefaTeste);
-
-		System.out.println("--- Tarefa de teste cadastrada com sucesso! ---");
-	}
 }
