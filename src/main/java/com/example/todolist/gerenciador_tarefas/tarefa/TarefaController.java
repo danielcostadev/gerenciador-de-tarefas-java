@@ -16,8 +16,16 @@ public class TarefaController {
     private TarefaRepository tarefaRepository;
 
     @GetMapping
-    public List<Tarefa> listarTodas(){
+    public List<Tarefa> buscarTodas(){
         return this.tarefaRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Tarefa> buscarPorId(@PathVariable Long id){
+        Tarefa tarefaEncontrad = this.tarefaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return ResponseEntity.status(HttpStatus.OK).body(tarefaEncontrad);
     }
 
     @PostMapping
@@ -31,7 +39,7 @@ public class TarefaController {
     @PutMapping("/{id}")
     public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa tarefaAtributos){
         Tarefa tarefaParaAtualizar = this.tarefaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada com o id: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         tarefaParaAtualizar.setNome(tarefaAtributos.getNome());
         tarefaParaAtualizar.setDescricao(tarefaAtributos.getDescricao());
